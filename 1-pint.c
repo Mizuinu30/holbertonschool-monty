@@ -5,7 +5,7 @@
  * @line_number: line number of current operation
  */
 
-void m_pint(stack_t **stack, unsigned int line_number)
+void pint(stack_t **stack, unsigned int line_number)
 {
 
 	stack_t *head = *stack;
