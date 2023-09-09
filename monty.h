@@ -8,7 +8,7 @@
 #include <fcntl.h>
 #include <ctype.h>
 #include <stdbool.h>
-
+#include <stdlib.h>
 
 #define DELIMS "\n \r\t"
 /**

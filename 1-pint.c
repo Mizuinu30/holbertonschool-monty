@@ -7,12 +7,13 @@
 
 void pint(stack_t **stack, unsigned int line_number)
 {
+	stack_t var;
 
 	stack_t *head = *stack;
 
 	if (var.stack_len == 0)
 	{
-		sprint(STDOUT_FILENO, "L%u: can't print, stack empty\n", line_number);
+		sprintf(STDOUT_FILENO, "L%u: can't print, stack empty\n", line_number);
 		exit(EXIT_FAILURE);
 	}
 	printf("%d\n", head->n);
