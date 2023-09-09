@@ -1,6 +1,6 @@
 #include "monty.h"
 /**
- * m_swap - swap top two elements of 'stack'
+ * swap - swap top two elements of 'stack'
  * @stack: double pointer to head of stack
  * @line_number: line number of current operation
  *
@@ -9,13 +9,14 @@
 void swap(stack_t **stack, unsigned int line_number)
 {
 	stack_t *next;
+	int stack_len = 0;
 
-	if (var.stack_len < 2)
+	if (stack_len < 2)
 	{
-		sprintf(STDOUT_FILENO, "L%u: can't swap, stack too short\n", line_number);
+		fprintf(stderr, "L%u: can't swap, stack too short\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	if (var.stack_len == 2)
+	if (stack_len == 2)
 	{
 		*stack = (*stack)->next;
 		return;
@@ -29,4 +30,5 @@ void swap(stack_t **stack, unsigned int line_number)
 	next->next = *stack;
 	*stack = next;
 }
+
 

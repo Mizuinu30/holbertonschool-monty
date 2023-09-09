@@ -12,6 +12,7 @@ stack_t **global_head;
 int main(int argc, char *argv[])
 {
 	stack_t *head;
+	FILE *file;
 
 	if (argc != 2)
 	{
@@ -22,9 +23,16 @@ int main(int argc, char *argv[])
 	head = NULL;
 	global_head = &head;
 
-	read_file(argv[1], &head);
+	file = fopen(argv[1], "r");
+
+	if (!file)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
 
 	atexit(global_free);
 
 	exit(EXIT_SUCCESS);
+
 }
