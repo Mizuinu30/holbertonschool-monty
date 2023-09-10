@@ -31,8 +31,9 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	atexit(global_free);
 
-	exit(EXIT_SUCCESS);
+	fclose(file);
+
+	return (0);
 
 }
