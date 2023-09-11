@@ -10,30 +10,51 @@
 
 void push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *node;
-	char *numbers;
+	stack_t *temp, *new;
+	int i;
 
-	numbers = strtok(NULL, DELIMS);
-	if (numbers == NULL)
+	new = malloc(sizeof(stack_t));
+	if (new == NULL)
 	{
-		printf("L%u: usage: push integer\n", line_number);
-		exit(EXIT_FAILURE);
+		set_op_tok_error(malloc_error());
+		return;
 	}
 
-	node = malloc(sizeof(stack_t));
-	if (node == NULL)
+	if (op_toks[1] == NULL)
 	{
-		printf("Error: malloc failed\n");
-		exit(EXIT_FAILURE);
+		set_op_tok_error(no_int_error(line_number));
+		return;
 	}
 
-	node->n = atoi(numbers);
-	node->prev = NULL;
-	node->next = *stack;
-
-	if (*stack != NULL)
-		(*stack)->prev = node;
-
-	*stack = node;
+	for (i = 0; op_toks[1][i]; i++)
+	{
+		if (op_toks[1][i] == '-' && i == 0)
+			continue;
+		if (op_toks[1][i] < '0' || op_toks[1][i] > '9')
+		{
+			set_op_tok_error(no_int_error(line_number));
+			return;
+		}
+	}
+	new->n = atoi(op_toks[1]);
+	if (check_mode(*stack) == STACK)
+	{
+		temp = (*stack)->next;
+		new->prev = *stack
+		new->next = temp;
+		if (tmp)
+			temp->prev = new;
+		(*stack)->next = new;
+	}
+	else
+	{
+		temp = *stack;
+		while (temp->next)
+			temp = temp->next;
+		next->prev = temp;
+		new->next = NULL;
+		temp->next = new;
+	}
 }
+
 
