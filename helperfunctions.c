@@ -1,83 +1,105 @@
 #include "monty.h"
 
 /**
- * line_validator - check whitespaces
- * @str: string for check
- *
- * Return: void
+ * _calloc - function that allocates memory for an array, using malloc
+ * @nmemb: array
+ * @size: size
+ * Return: pointer or NULL
  */
-int line_validator(char *str)
-{
-	int index = 0, flag = 0, len = 0;
 
-	len = strlen(str);
-	while (str[index] == ' ' || str[index] == '\t' || str[index] == '\n')
+void *_calloc(unsigned int nmemb, unsigned int size)
+{
+	unsigned int index = 0;
+	char *ptr = NULL;
+
+	if (nmemb == 0 || size == 0)
+		return (NULL);
+
+	ptr = malloc(nmemb * size);
+	if (!ptr)
 	{
-		index++;
+		dprintf(STDERR_FILENO, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
 	}
 
-	if (index == len)
-		flag = 1;
+	for (; index < (nmemb * size); index++)
+		ptr[index] = 0;
 
-	return (flag);
+	return (ptr);
 }
 
 /**
- * is_digit - check is digit
- * @number: character for check
- *
- * Return: void
+ * _atoi - function converts a string to integer
+ * @str: string to convert
+ * @line_number: file line number
+ * Return: int
  */
-void is_digit(char *number)
-{
-	unsigned int i = 0;
 
-	if (number == NULL)
+int _atoi(char *str, unsigned int line_number)
+{
+	int num = 0, i = 0;
+	unsigned int valid_nums = 0;
+
+	while (str[i] && str[i] >= '0' && str[i] <= '9')
 	{
-		fprintf(stderr, "L%u: usage: push integer\n", var.n_lines);
-		free(var.getl_info);
-		handle_dlist_head(var.stack_head);
-		fclose(var.fp_struct);
+		num = num * 10 + (str[i] - '0');
+		valid_nums++;
+		i++;
+	}
+
+	if (valid_nums != strlen(str) - 1)
+	{
+		dprintf(STDERR_FILENO, "L%i: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-	else if (number[0] != '-' && (number[0] < 48 || number[0] > 57))
-	{
-		fprintf(stderr, "L%u: usage: push integer\n", var.n_lines);
-		free(var.getl_info);
-		handle_dlist_head(var.stack_head);
-		fclose(var.fp_struct);
-		exit(EXIT_FAILURE);
-	}
-	for (i = 1; number[i] != '\0'; i++)
-	{
-		if (number[i] < 48 || number[i] > 57)
-		{
-			fprintf(stderr, "L%u: usage: push integer\n", var.n_lines);
-			free(var.getl_info);
-			handle_dlist_head(var.stack_head);
-			fclose(var.fp_struct);
-			exit(EXIT_FAILURE);
-		}
-	}
+
+	return (num);
 }
 
 /**
- * dlistint_len - returns the number of elements in a d linked list
- * @h: head of the linked list
- *
- * Return: the number of nodes
+ * _split - split string
+ * @str: string
+ * @sep: separator
+ * Return: divided str
  */
-size_t dlistint_len(stack_t *h)
-{
-	size_t n_nodes = 0;
 
-	if (h == NULL)
+char **_split(char *str, char *sep)
+{
+	char *aux, **split_str;
+	int i = 0;
+
+	aux = strtok(str, sep);
+	split_str = (char **)_calloc(100, sizeof(char *));
+
+	if (!split_str)
 	{
-		return (0);
+		free(split_str);
+		dprintf(STDERR_FILENO, "Error: malloc failed\n");
+		exit(EXIT_FAILURE);
 	}
-	while (h != NULL)
+
+	while (aux)
 	{
-		h = h->next;
-		n_nodes++;
+		split_str[i] = aux;
+		aux = strtok(NULL, sep);
+		i++;
 	}
-	return (n_nodes);
+	return (split_str);
+}
+
+/**
+ * free_stack - frees a list
+ * @head: struct
+ */
+
+void free_stack(stack_t *head)
+{
+	stack_t *stack;
+
+	while (head)
+	{
+		stack = head->next;
+		free(head);
+		head = stack;
+	}
+}

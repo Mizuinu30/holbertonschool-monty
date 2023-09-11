@@ -1,13 +1,21 @@
 #ifndef MONTY_H
 #define MONTY_H
-#define  _GNU_SOURCE
 
-/* Libraries */
+/* LIBRARIES */
+
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-#include <ctype.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <unistd.h>
+#include <string.h>
+
+/* GLOBAL VARS */
+
+char *buff;
+
+/* STRUCTURES */
 
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -16,8 +24,9 @@
  * @next: points to the next element of the stack (or queue)
  *
  * Description: doubly linked list node structure
- * for stack, queues, LIFO, FIFO Holberton project
+ * for stack, queues, LIFO, FIFO
  */
+
 typedef struct stack_s
 {
 	int n;
@@ -31,64 +40,35 @@ typedef struct stack_s
  * @f: function to handle the opcode
  *
  * Description: opcode and its function
- * for stack, queues, LIFO, FIFO Holberton project
+ * for stack, queues, LIFO, FIFO
  */
 typedef struct instruction_s
 {
 	char *opcode;
-	void (*f)(stack_t **stack, unsigned int line_number);
+	void (*f)(stack_t **stack, unsigned int);
 } instruction_t;
 
-/**
- * struct global_s - funtional data for project
- * @n_lines: lines counter
- * @stack_head: stack head
- * @fp_struct: file
- * @getl_info: line content
- * @node_data: data node number
- *
- * Description: opcode and its function
- * for stack, queues, LIFO, FIFO Holberton project
- */
-typedef struct global_s
-{
-	FILE *fp_struct;
-	stack_t *stack_head;
-	char *getl_info;
+/* PROTOTYPES */
 
-	int node_data;
-	unsigned int n_lines;
+/* main functions */
+void handle(char *file);
+void (*check_opcodes(void))(stack_t **, unsigned int);
 
-} global_t;
+/* aux functions*/
+void *_calloc(unsigned int nmemb, unsigned int size);
+char **_split(char *str, char *sep);
+int _atoi(char *str, unsigned int line_number);
+void free_stack(stack_t *head);
 
-/* global Variable */
-extern global_t var;
+/* handle functions */
+void push(stack_t **stack, unsigned int line_number);
+void pop(stack_t **stack, unsigned int line_number);
+void swap(stack_t **stack, unsigned int line_number);
+void add(stack_t **stack, unsigned int line_number);
 
-/* execute the matched opcode function */
-void execute_opcode(char *opcode);
+/* print functions */
+void pall(stack_t **stack, unsigned int line_number);
+void pint(stack_t **stack, unsigned int line_number);
+void nop(stack_t **stack, unsigned int line_number);
 
-/* handle the head of a doubly linked list */
-void handle_dlist_head(stack_t *head);
-
-/* get the opcode and check if the argument of push in an integer */
-char *split_str(char *str_to_split);
-
-/* helper functions */
-void is_digit(char *number);
-int line_validator(char *str);
-size_t dlistint_len(stack_t *h);
-
-/* opcode functions */
-void op_push(stack_t **stack, unsigned int line_number);
-void op_pall(stack_t **stack, unsigned int line_number);
-void op_pint(stack_t **stack, unsigned int line_number);
-void op_swap(stack_t **stack, unsigned int line_number);
-void op_pop(stack_t **stack, unsigned int line_number);
-void op_add(stack_t **stack, unsigned int line_number);
-void op_nop(stack_t **stack, unsigned int line_number);
-void op_sub(stack_t **stack, unsigned int line_number);
-void op_div(stack_t **stack, unsigned int line_number);
-void op_mul(stack_t **stack, unsigned int line_number);
-void op_mod(stack_t **stack, unsigned int line_number);
-
-#endif /* MONTY_H */
+#endif
