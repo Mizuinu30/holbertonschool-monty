@@ -45,6 +45,7 @@ typedef struct instruction_s
 
 extern stack_t **global_head;
 
+void set_op_tok_error(int error_code);
 void push(stack_t **stack, unsigned int line_number);
 void pall(stack_t **stack, unsigned int line_number);
 void pop(stack_t **stack, unsigned int line_number);
