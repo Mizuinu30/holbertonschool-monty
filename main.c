@@ -1,26 +1,41 @@
-#include "main.h"
+#include "monty.h"
 
-char **op_toks = NULL;
-
+global_t var;
 /**
- * main - the entry point for Monty Interp
+ *  main -  interpreter for Monty ByteCodes files
+ *  @argc: Number of paramethers
+ *  @argv: Pointer to all the paramethers
  *
- * @argc: the count of arguments passed to the program
- * @argv: pointer to an array of char pointers to arguments
- *
- * Return: (EXIT_SUCCESS) on success (EXIT_FAILURE) on error
+ *  Return: Always 0
  */
 int main(int argc, char **argv)
 {
-	FILE *script_fd = NULL;
-	int exit_code = EXIT_SUCCESS;
+	size_t line_buf_size = 0;
 
+	var.getl_info = NULL;
+	var.stack_head = NULL;
+	var.n_lines = 0;
 	if (argc != 2)
-		return (usage_error());
-	script_fd = fopen(argv[1], "r");
-	if (script_fd == NULL)
-		return (f_open_error(argv[1]));
-	exit_code = run_monty(script_fd);
-	fclose(script_fd);
-	return (exit_code);
+	{
+		fprintf(stderr, "USAGE: monty file\n");
+		exit(EXIT_FAILURE);
+	}
+	var.fp_struct = fopen(argv[1], "r");
+	if (!var.fp_struct)
+	{
+		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
+		exit(EXIT_FAILURE);
+	}
+	while (getline(&var.getl_info, &line_buf_size, var.fp_struct) != EOF)
+	{
+		var.n_lines++;
+		if (line_validator(var.getl_info) == 1)
+			continue;
+		/*split_str(var.getl_info);*/
+		execute_opcode(split_str(var.getl_info));
+	}
+	free(var.getl_info);
+	handle_dlist_head(var.stack_head);
+	fclose(var.fp_struct);
+	return (EXIT_SUCCESS);
 }

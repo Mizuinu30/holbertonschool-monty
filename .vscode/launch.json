@@ -3,11 +3,22 @@
   "configurations": [
     {
       "name": "C/C++ Runner: Debug Session",
-      "type": "lldb",
+      "type": "cppdbg",
       "request": "launch",
       "args": [],
-      "cwd": "/Users/waltercarrion/Desktop/github/holbertonschool-monty",
-      "program": "/Users/waltercarrion/Desktop/github/holbertonschool-monty/build/Debug/outDebug"
+      "stopAtEntry": false,
+      "externalConsole": false,
+      "cwd": "/home/user/Myrepo1/holbertonschool-monty/holbertonschool-monty",
+      "program": "/home/user/Myrepo1/holbertonschool-monty/holbertonschool-monty/build/Debug/outDebug",
+      "MIMode": "lldb",
+      "miDebuggerPath": "lldb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        }
+      ]
     }
   ]
 }
