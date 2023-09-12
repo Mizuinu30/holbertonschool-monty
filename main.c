@@ -1,19 +1,30 @@
 #include "monty.h"
 
-/**
- * main - function main
- * @argc: variable int
- * @argv: variable char
- * Return: int
- */
+stack_t **global_head;
 
-int main(int argc, char **argv)
+/**
+ * main - the root of the project
+ * @argc: how many arguments were passed to a program
+ * @argv: arguments vector
+ *
+ * Return: on scuccess, always EXIT_SUCCESS
+ */
+int main(int argc, char *argv[])
 {
+	stack_t *head;
+
 	if (argc != 2)
 	{
-		dprintf(STDERR_FILENO, "USAGE: monty file\n");
+		printf("USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	handle(argv[1]);
-	return (0);
+
+	head = NULL;
+	global_head = &head;
+
+	read_file(argv[1], &head);
+
+	atexit(global_free);
+
+	exit(EXIT_SUCCESS);
 }
