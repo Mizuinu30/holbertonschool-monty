@@ -10,7 +10,7 @@
 void push(stack_t **stack, unsigned int line_number)
 {
 	char *num = strtok(NULL, DELIMS);
-	
+
 	if (num == NULL)
 	{
 		fprintf(stderr,"L%u: usage: push integer\n", line_number);
@@ -22,7 +22,7 @@ void push(stack_t **stack, unsigned int line_number)
 	if (node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
-		exit(EXIT_FAILURE); 
+		exit(EXIT_FAILURE);
 	}
 
 	node->n = atoi(num);
