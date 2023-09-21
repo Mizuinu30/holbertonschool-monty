@@ -11,13 +11,12 @@ void push(stack_t **stack, unsigned int line_number)
 {
 	char *num = strtok(NULL, DELIMS);
 
+	stack_t *node = malloc(sizeof(stack_t));
 	if (num == NULL)
 	{
 		fprintf(stderr, "L%u: usage: push integer\n", line_number);
 		exit(EXIT_FAILURE);
 	}
-
-	stack_t *node = malloc(sizeof(stack_t));
 
 	if (node == NULL)
 	{
