@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/user/Myrepo1/holbertonschool-monty/holbertonschool-monty",
-      "program": "/home/user/Myrepo1/holbertonschool-monty/holbertonschool-monty/build/Debug/outDebug",
+      "cwd": "/home/user/monty/holbertonschool-monty",
+      "program": "/home/user/monty/holbertonschool-monty/build/Debug/outDebug",
       "MIMode": "lldb",
       "miDebuggerPath": "lldb",
       "setupCommands": [
