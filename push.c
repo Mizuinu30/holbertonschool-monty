@@ -1,7 +1,7 @@
 #include "monty.h"
 
 /**
- * push - pushes new node to the end of the stack
+ * push - pushes a new node to the end of the stack
  * @stack: double pointer to the head of the stack
  * @line_number: the number of a line of the file
  *
@@ -17,8 +17,8 @@ void push(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 
-
 	stack_t *node = malloc(sizeof(stack_t));
+
 	if (node == NULL)
 	{
 		fprintf(stderr, "Error: malloc failed\n");
