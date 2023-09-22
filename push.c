@@ -9,7 +9,7 @@
  */
 void push(stack_t **stack, unsigned int line_number)
 {
-	char *num = strtok(NULL, DELIMS);
+	char *num = strtok(NULL, " \n\t\r$");
 
 	if (num == NULL)
 	{

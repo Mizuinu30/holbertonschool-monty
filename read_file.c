@@ -25,7 +25,7 @@ void read_file(char *file, stack_t **stack)
 
 	while ((read_line = getline(&line, &len, fd)) != -1)
 	{
-		command = strtok(line, DELIMS);
+		command = strtok(opcode, " \n\t\r$");
 		num++;
 
 		if (command)
