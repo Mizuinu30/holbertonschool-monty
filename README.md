@@ -1,5 +1,5 @@
 
-# Holeberon Scool- Monty
+# Holberton School- Monty
 
 
 
